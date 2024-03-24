@@ -33,15 +33,15 @@ def InceptionResNetV1Norm(input_shape=(160, 160, 3),
     ## TO DO Step 1 : Finish the implementation for preprocessing with given parameters
     # Please name all layers properly to make it easy for your debugging
     # Your code goes here
-    inputs = Input(shape=(77, 77, 32))
-    x = conv2d_bn(inputs,
+    # inputs = Input(shape=(77, 77, 32))
+    x = conv2d_bn(x,
                   64,                # TODO: confirm
                   3,
                   strides=1,
                   padding='same',
                   name='Conv2d_1b_3x3')
 
-    inputs = Input(shape=(77, 77, 64))
+    # inputs = Input(shape=(77, 77, 64))
     # x = MaxPooling2D(
     #                  pool_size=(2,2),
     #                  strides=2,
@@ -51,24 +51,24 @@ def InceptionResNetV1Norm(input_shape=(160, 160, 3),
                      padding='valid', 
                      name='MaxPool_1a_3x3')(x)
 
-    inputs = Input(shape=(38, 38, 64))
-    x = conv2d_bn(inputs,
+    # inputs = Input(shape=(38, 38, 64))
+    x = conv2d_bn(x,
                   80,
                   1,
                   strides=1,
                   padding='valid',
                   name='Conv2d_1c_3x3')
     
-    inputs = Input(shape=(38, 38, 80))
-    x = conv2d_bn(inputs,
+    # inputs = Input(shape=(38, 38, 80))
+    x = conv2d_bn(x,
                   192,
                   3,
                   strides=1,
                   padding='valid',
                   name='Conv2d_1d_3x3')
 
-    inputs = Input(shape=(36, 36, 192))
-    x = conv2d_bn(inputs,
+    # inputs = Input(shape=(36, 36, 192))
+    x = conv2d_bn(x,
                   256,
                   3,
                   strides=2,
@@ -181,8 +181,7 @@ def InceptionResNetV1Norm(input_shape=(160, 160, 3),
                      scale=1.,
                      block_idx=6,
                      block_type='Inception_block_c',
-                     activation=None
-                               )
+                     activation=None)
 
 
     # Classification block
@@ -191,7 +190,7 @@ def InceptionResNetV1Norm(input_shape=(160, 160, 3),
     # x = # Your code goes here (do not modify the variable name assigned to)
     # x = # Your code goes here (do not modify the variable name assigned to)
     x = GlobalAveragePooling2D()(x)
-    x = Dropout(rate=dropout_keep_prob)     # TODO: confirm
+    x = Dropout(rate=(1.0 - dropout_keep_prob))(x)     # TODO: confirm
 
 
     ## DO NOT TOUCH
