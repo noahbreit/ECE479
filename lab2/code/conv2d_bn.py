@@ -23,7 +23,13 @@ def conv2d_bn(x,
 
     ## TO DO Step1 : Apply a Conv 2D Keras Layer with all given parameters
     # Your code goes here
-    x = Conv2D(filters, kernel_size, strides, padding, activation, use_bias, name='conv_name')*x
+    x = Conv2D(filters=filters, 
+               kernel_size=kernel_size, 
+               strides=strides, 
+               padding=padding,
+               activation=activation,
+               use_bias=use_bias,
+               name=name)(x)
 
 
 

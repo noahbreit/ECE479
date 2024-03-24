@@ -30,12 +30,42 @@ def InceptionResNetV1Norm(input_shape=(160, 160, 3),
     ## TO DO Step 1 : Finish the implementation for preprocessing with given parameters
     # Please name all layers properly to make it easy for your debugging
     # Your code goes here
+    inputs = Input(shape=(77, 77, 32))
+    x = conv2d_bn(inputs,
+                  64,                # TODO: confirm
+                  3,
+                  strides=1,
+                  padding='same',
+                  name='Conv2d_1b_3x3')
 
+    inputs = Input(shape=(77, 77, 64))
+    x = MaxPooling2D(2,
+                     strides=2,
+                     name='MaxPool_1a_3x3')(x)
+    
+    inputs = Input(shape=(38, 38, 64))
+    x = conv2d_bn(inputs,
+                  80,
+                  1,
+                  strides=1,
+                  padding='valid',
+                  name='Conv2d_1c_3x3')
+    
+    inputs = Input(shape=(38, 38, 80))
+    x = conv2d_bn(inputs,
+                  192,
+                  3,
+                  strides=1,
+                  padding='valid',
+                  name='Conv2d_1d_3x3')
 
-
-
-
-
+    inputs = Input(shape=(36, 36, 192))
+    x = conv2d_bn(inputs,
+                  256,
+                  3,
+                  strides=2,
+                  padding='valid',
+                  name='Conv2d_1e_3x3')
     ##############################################
 
     # 5x Inception-ResNet-A block:
@@ -43,10 +73,13 @@ def InceptionResNetV1Norm(input_shape=(160, 160, 3),
     # Please name all blocks properly to make it easy for your debugging
     # Hint : Use for loop to instantiate multiples reception blocks
     # Your code goes here
+    scale = 0.17
+    min_block_idx = 1
+    max_block_idx = 5
+    block_type = 'Inception_block_a'
 
-
-
-
+    for idx in range(min_block_idx, max_block_idx + 1):
+        x = resnet_block(x, scale, idx, block_type)
 
     ###############################################
 
@@ -79,10 +112,13 @@ def InceptionResNetV1Norm(input_shape=(160, 160, 3),
     # Please name all blocks properly to make it easy for your debugging
     # Hint : Use for loop to instantiate multiples reception blocks
     # Your code goes here
+    scale = 0.1
+    min_block_idx = 1
+    max_block_idx = 10
+    block_type = 'Inception_block_b'
 
-
-
-
+    for idx in range(min_block_idx, max_block_idx + 1):
+        x = resnet_block(x, scale, idx, block_type)
 
     ###############################################
 
@@ -122,10 +158,13 @@ def InceptionResNetV1Norm(input_shape=(160, 160, 3),
     # Please name all blocks properly to make it easy for your debugging
     # Hint : Use for loop to instantiate multiples reception blocks
     # Your code goes here
+    scale = 0.2
+    min_block_idx = 1
+    max_block_idx = 5
+    block_type = 'Inception_block_c'
 
-
-
-
+    for idx in range(min_block_idx, max_block_idx + 1):
+        x = resnet_block(x, scale, idx, block_type)
 
     ###############################################
 
@@ -141,8 +180,10 @@ def InceptionResNetV1Norm(input_shape=(160, 160, 3),
     # Classification block
     ## TO DO Step 5 : Apply Global Average pooling + Dropout layers
     # Please name all blocks properly to make it easy for your debugging
-    x = # Your code goes here (do not modify the variable name assigned to)
-    x = # Your code goes here (do not modify the variable name assigned to)
+    # x = # Your code goes here (do not modify the variable name assigned to)
+    # x = # Your code goes here (do not modify the variable name assigned to)
+    x = GlobalAveragePooling2D()(x)
+    x = Dropout(rate=dropout_keep_prob)     # TODO: confirm
 
 
     ## DO NOT TOUCH
