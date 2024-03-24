@@ -7,6 +7,9 @@
 
 # Import all packages
 from resnet_block import *
+import tensorflow as tf
+from tensorflow import keras
+import numpy as np
 
 # Definition for the Inception ResNet Structure starts here
 def InceptionResNetV1Norm(input_shape=(160, 160, 3),
@@ -39,10 +42,15 @@ def InceptionResNetV1Norm(input_shape=(160, 160, 3),
                   name='Conv2d_1b_3x3')
 
     inputs = Input(shape=(77, 77, 64))
-    x = MaxPooling2D(2,
-                     strides=2,
+    # x = MaxPooling2D(
+    #                  pool_size=(2,2),
+    #                  strides=2,
+    #                  name='MaxPool_1a_3x3')(x)
+    x = MaxPooling2D(3, 
+                     strides=2, 
+                     padding='valid', 
                      name='MaxPool_1a_3x3')(x)
-    
+
     inputs = Input(shape=(38, 38, 64))
     x = conv2d_bn(inputs,
                   80,
