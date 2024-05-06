@@ -54,8 +54,10 @@ while True:
         
         #run inference
         #TODO
-        img_data_float = img_data[:,:,:].astype(np.float32)
-        interpreter.set_tensor(input_details[0]['index'], img_data_float)
+        img_data_float = img_nparr[:,:,:].astype(np.float32)
+        img_batch = np.zeros(shape=(1,224,224,3), dtype=np.float32)
+        img_batch[0] = img_data_float
+        interpreter.set_tensor(input_details[0]['index'], img_batch)
         interpreter.invoke()
         output_data = interpreter.get_tensor(output_details[0]['index'])
         print(output_data)
