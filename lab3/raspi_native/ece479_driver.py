@@ -8,6 +8,7 @@ from detect_and_crop import *
 from image_to_jpeg import *
 from mtcnn import MTCNN
 from PIL import Image
+from telegramAPI import *
 from telegram import Update, Bot
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 import numpy as np
@@ -41,40 +42,40 @@ chat_id = -4125547836
 #main
 
 
-async def startCommand(update, context):
-    await update.message.reply_text('Hi! Send me an image and I will save it.')
+# async def startCommand(update, context):
+#     await update.message.reply_text('Hi! Send me an image and I will save it.')
 
-# async def letIn(update, context):
-#     await update.message.send_message('Letting In ' + name)
+# # async def letIn(update, context):
+# #     await update.message.send_message('Letting In ' + name)
 
-def recogonizeGuest(prob_array):
+# def recogonizeGuest(prob_array):
 
-            arr = prob_array[0]
-            maxIdx = np.argmax(arr)
+#             arr = prob_array[0]
+#             maxIdx = np.argmax(arr)
 
-            if maxIdx == 0:
+#             if maxIdx == 0:
 
-                return "invalid"
+#                 return "invalid"
             
-            elif maxIdx == 1:
+#             elif maxIdx == 1:
 
-                return "Noah"
+#                 return "Noah"
 
-            elif maxIdx == 2:
+#             elif maxIdx == 2:
 
-                  return "Vishvesh"
+#                   return "Vishvesh"
             
-if __name__ == "__main__":
-    print( 'Starting bot...')
-    app = Application.builder().token(TOKEN).build()
-    # Commands
-    # app.add_handler(CommandHandler ('saveImage', saveImageHandler)) 
-    app.add_handler(CommandHandler ("start", startCommand))
-    # Errors
-    # app.add_error_handler (error)
-    # Polls the bot
-    print( 'Polling...')
-    app.run_polling(poll_interval=3)
+# if __name__ == "__main__":
+#     print( 'Starting bot...')
+#     app = Application.builder().token(TOKEN).build()
+#     # Commands
+#     # app.add_handler(CommandHandler ('saveImage', saveImageHandler)) 
+#     app.add_handler(CommandHandler ("start", startCommand))
+#     # Errors
+#     # app.add_error_handler (error)
+#     # Polls the bot
+#     print( 'Polling...')
+#     app.run_polling(poll_interval=3)
 
 #######################################################################################################################################################################################
 
@@ -110,9 +111,7 @@ while True:
         
         name = recogonizeGuest(output_data)
 
-        if name != "invalid":
-
-            bot.send_message(chat_id=chat_id, text="Letting in " + name)
+        bot.send_message(chat_id=chat_id, text=name)
 
 
 
