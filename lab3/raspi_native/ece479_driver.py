@@ -80,6 +80,8 @@ chat_id = -4125547836
 #######################################################################################################################################################################################
 
 
+async def sendName(name):
+    await bot.send_message(chat_id=chat_id, text=name)
 
 while True:
     #raspi-cam grab 768by1024 RGB img
@@ -111,7 +113,7 @@ while True:
         
         name = recogonizeGuest(output_data)
 
-        bot.send_message(chat_id=chat_id, text=name)
+        sendName(name)
 
 
 
