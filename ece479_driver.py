@@ -8,8 +8,7 @@ from detect_and_crop import *
 from image_to_jpeg import *
 from mtcnn import MTCNN
 from PIL import Image
-#from telegram.ext import Updater, CommandHandler
-#from telegram import Bot
+
 
 #def unrecogonizedGuest(update, context):
 #            text = update.message.text

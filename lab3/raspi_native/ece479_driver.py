@@ -8,11 +8,11 @@ from detect_and_crop import *
 from image_to_jpeg import *
 from mtcnn import MTCNN
 from PIL import Image
-from telegramAPI import *
+from telegram import Update, Bot
+from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+import numpy as np
 
 #from telegram.ext import Updater, CommandHandler
-from telegram import Bot
-
 #def unrecogonizedGuest(update, context):
 #            text = update.message.text
 #            # Check if the message contains a specific word or phrase
@@ -28,7 +28,9 @@ interpreter.allocate_tensors()
 input_details = interpreter.get_input_details()
 output_details = interpreter.get_output_details()
 
-bot = Bot(token='7155333144:AAFjLijG6fhYtUmFo13WCCEDlgxr-xtjUBM')
+TOKEN = '7155333144:AAFjLijG6fhYtUmFo13WCCEDlgxr-xtjUBM'
+bot = Bot(token=TOKEN)
+chat_id = -4125547836
 #updater = Updater(token='7155333144:AAFjLijG6fhYtUmFo13WCCEDlgxr-xtjUBM')
 
 #dispatcher = updater.dispatcher
@@ -37,6 +39,47 @@ bot = Bot(token='7155333144:AAFjLijG6fhYtUmFo13WCCEDlgxr-xtjUBM')
 #updater.start_polling()
 # updater.idle()
 #main
+
+
+async def startCommand(update, context):
+    await update.message.reply_text('Hi! Send me an image and I will save it.')
+
+# async def letIn(update, context):
+#     await update.message.send_message('Letting In ' + name)
+
+def recogonizeGuest(prob_array):
+
+            arr = prob_array[0]
+            maxIdx = np.argmax(arr)
+
+            if maxIdx == 0:
+
+                return "invalid"
+            
+            elif maxIdx == 1:
+
+                return "Noah"
+
+            elif maxIdx == 2:
+
+                  return "Vishvesh"
+            
+if __name__ == "__main__":
+    print( 'Starting bot...')
+    app = Application.builder().token(TOKEN).build()
+    # Commands
+    # app.add_handler(CommandHandler ('saveImage', saveImageHandler)) 
+    app.add_handler(CommandHandler ("start", startCommand))
+    # Errors
+    # app.add_error_handler (error)
+    # Polls the bot
+    print( 'Polling...')
+    app.run_polling(poll_interval=3)
+
+#######################################################################################################################################################################################
+
+
+
 while True:
     #raspi-cam grab 768by1024 RGB img
     image = capture_image()
@@ -69,7 +112,7 @@ while True:
 
         if name != "invalid":
 
-            bot.send_message(chat_id=-4135547836, text='Letting in ' + name)
+            bot.send_message(chat_id=chat_id, text="Letting in " + name)
 
 
 
@@ -77,4 +120,6 @@ while True:
     
     #upload to raspi-host
     #TODO
+
+
         
