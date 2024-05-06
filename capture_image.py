@@ -1,5 +1,5 @@
-import cv2
 import io
+import cv2
 import picamera
 import numpy as np
 def capture_image():
