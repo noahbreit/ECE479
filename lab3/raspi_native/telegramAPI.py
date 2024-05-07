@@ -3,10 +3,14 @@
 import numpy as np
 # # from hostpc_native.tf_driver import *
 from telegram import Update
+from telegram import Bot
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
-# bot = Bot(token='7155333144:AAFjLijG6fhYtUmFo13WCCEDlgxr-xtjUBM')
+chat_idx = -4135478636
+bot = Bot(token='7155333144:AAFjLijG6fhYtUmFo13WCCEDlgxr-xtjUBM')
 TOKEN = '7155333144:AAFjLijG6fhYtUmFo13WCCEDlgxr-xtjUBM'
+print( 'Starting bot...')
+app = Application.builder().token(TOKEN).build()
 
 # def unrecogonizedGuest(update, context):
 #             text = update.message.text
@@ -21,15 +25,30 @@ TOKEN = '7155333144:AAFjLijG6fhYtUmFo13WCCEDlgxr-xtjUBM'
 
 async def startCommand(update, context):
     await update.message.reply_text('Hi! Send me an image and I will save it.')
+    print(update.effective_chat.id)
+    
+async def sendName(name):
+    await bot.send_message(chat_id = chat_idx, text=name)
+
+# Commands
+# app.add_handler(CommandHandler ('saveImage', saveImageHandler)) 
+app.add_handler(CommandHandler ("start", startCommand))
+app.add_handler(CommandHandler ("atDoor", sendName))
+
+    #chat_id=-4135547836
+#async def letIn(update, context, name="No one"):
+ #   await update.message.send_message(text='Letting in ' + name)
+
     
 
-# def saveImageHandler(update, context):
-#     photo = update.message.photo[-1]  # Getthe highest quality photo
-#     text = update.message.text
-#     file = update.get_file(photo.file_id)
-#     file_path = f"lab3/hostpc_native/training/{text}/{photo.file_id}.jpg"  # Define path where the image will be saved
-#     file.download(file_path)  # Save the image locally
-#     update.message.reply_text('Guest saved!')
+#def saveImageHandler(update, context):
+#    update.message.reply_text('Send Image')
+#    photo = update.message.photo  # Getthe highest quality photo
+#    text = update.message.text
+#    file = update.get_file(photo.file_id)
+#    file_path = f"../hostpc_native/training/{text}/{photo.file_id}.jpg"  # Define path where the image will be saved
+#    file.download(file_path)  # Save the image locally
+#    update.message.reply_text('Guest saved!')
 
 def recogonizeGuest(prob_array):
 
@@ -53,16 +72,12 @@ def recogonizeGuest(prob_array):
 # updater = Updater(token='7155333144:AAFjLijG6fhYtUmFo13WCCEDlgxr-xtjUBM')
 # dispatcher = updater.dispatcher
 # dispatcher.add_handler(MessageHandler(filters.text & ~filters.command, unrecogonizedGuest))
-# dispatcher.add_handler(CommandHandler("saveImage", saveImageHandler))
+#app.add_handler(CommandHandler("saveImage", saveImageHandler))
 # updater.start_polling()
 
 
 if __name__ == "__main__":
-    print( 'Starting bot...')
-    app = Application.builder().token(TOKEN).build()
-    # Commands
-    # app.add_handler(CommandHandler ('saveImage', saveImageHandler)) 
-    app.add_handler(CommandHandler ("start", startCommand))
+    
     # Errors
     # app.add_error_handler (error)
     # Polls the bot
