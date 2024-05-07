@@ -20,7 +20,7 @@ name = ""
 
 def main():
     #setup
-    print("setup...")
+    print("Setup Tensorflow...")
     mtcnn = MTCNN()
     interpreter = tflite.Interpreter(model_path='res50net_lite_num3.tflite')
     interpreter.allocate_tensors()
@@ -40,14 +40,12 @@ def main():
         if cropped_image is not None:
             print("Face detected...")
             img_data = image_to_jpeg(cropped_image, f"capture_{int(time.time())}")
-            #file_name = int(time.time())
             #bot.send_photo(chat_id=-4135547836, photo=img_data)
             #bot.send_message(chat_id=-4135547836, text='Is this a known person?')
             img_data.show()
             img_nparr = np.array(img_data)
             
             #run inference
-            #TODO
             img_data_float = img_nparr[:,:,:].astype(np.float32)
             img_batch = np.zeros(shape=(1,224,224,3), dtype=np.float32)
             img_batch[0] = img_data_float
@@ -56,16 +54,12 @@ def main():
             output_data = interpreter.get_tensor(output_details[0]['index'])
             print(output_data)
 
-            
             name = recogonizeGuest(output_data)
 
-            #sendName(name)
-            #asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
             asyncio.run(sendName(name))
-            #async with Bot(token=TOKEN) as bot:
-                #await bot.send_message(chat_id=chat_idx, text=name)
             print('Sleep...')
             time.sleep(1)
             print('Awake...')
+
 if __name__ == "__main__":
     main()
