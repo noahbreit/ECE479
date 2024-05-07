@@ -14,67 +14,9 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 import numpy as np
 import asyncio
 
-#from telegram.ext import Updater, CommandHandler
-#def unrecogonizedGuest(update, context):
-#            text = update.message.text
-#            # Check if the message contains a specific word or phrase
-#            if 'yes' in text.lower():
-#                update.message.reply_text('Letting in guest')
-#            elif 'no' in text.lower():
-#                update.message.reply_text('Not letting unknown person in')
-
 TOKEN = '7155333144:AAFjLijG6fhYtUmFo13WCCEDlgxr-xtjUBM'
 chat_idx = -4135478636
 name = ""
-
-#bot = Bot(token=TOKEN)
-#chat_id = -4125547836
-#updater = Updater(token='7155333144:AAFjLijG6fhYtUmFo13WCCEDlgxr-xtjUBM')
-
-#dispatcher = updater.dispatcher
-#dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, unrecogonizedGuest))
-
-#updater.start_polling()
-# updater.idle()
-#main
-
-
-# async def startCommand(update, context):
-#     await update.message.reply_text('Hi! Send me an image and I will save it.')
-
-# # async def letIn(update, context):
-# #     await update.message.send_message('Letting In ' + name)
-
-# def recogonizeGuest(prob_array):
-
-#             arr = prob_array[0]
-#             maxIdx = np.argmax(arr)
-
-#             if maxIdx == 0:
-
-#                 return "invalid"
-            
-#             elif maxIdx == 1:
-
-#                 return "Noah"
-
-#             elif maxIdx == 2:
-
-#                   return "Vishvesh"
-            
-# if __name__ == "__main__":
-#     print( 'Starting bot...')
-#     app = Application.builder().token(TOKEN).build()
-#     # Commands
-#     # app.add_handler(CommandHandler ('saveImage', saveImageHandler)) 
-#     app.add_handler(CommandHandler ("start", startCommand))
-#     # Errors
-#     # app.add_error_handler (error)
-#     # Polls the bot
-#     print( 'Polling...')
-#     app.run_polling(poll_interval=3)
-
-#######################################################################################################################################################################################
 
 def main():
     #setup
